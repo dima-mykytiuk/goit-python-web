@@ -6,30 +6,6 @@ import re
 from threading import RLock, Thread
 
 
-class ThreadMoveFiles(Thread):
-    def __init__(self, path, locker):
-        super().__init__()
-        self.path = path
-        self.locker = locker
-        
-    def run(self):
-        self.locker.acquire()
-        find_files_and_sort(self.path)
-        self.locker.release()
-
-
-class ThreadRemove(Thread):
-    def __init__(self, path, locker):
-        super().__init__()
-        self.path = path
-        self.locker = locker
-    
-    def run(self):
-        self.locker.acquire()
-        remove_empty_folders(self.path)
-        self.locker.release()
-
-
 def normalize(name):
     table_symbols = ('абвгґдеєжзиіїйклмнопрстуфхцчшщюяыэАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЮЯЫЭьъЬЪ', (
         'a', 'b', 'v', 'h', 'g', 'd', 'e', 'ye', 'zh', 'z', 'y', 'i', 'yi', 'y', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's',
@@ -66,7 +42,8 @@ def find_files_and_sort(path):
             path_to_unpack = f'{main_path}{folder_sep}archives{folder_sep}{rem_suffix}'
             for folder_name in folder_list:
                 if folder_name != 'archives':
-                    move_files(path, item_name, file_type, folder_name, main_path)
+                    move = Thread(target=move_files, args=(path, item_name, file_type, folder_name, main_path))
+                    move.start()
                 elif file_type in files_type.get('archives') and not os.path.exists(path_to_unpack):
                     shutil.unpack_archive(path_from, path_to_unpack)
                     os.remove(path_from)
@@ -97,17 +74,7 @@ def remove_empty_folders(path_abs):
         if len_0 or len_1:
             shutil.rmtree(path)
 
-
-def sort():
-    lock = RLock()
-    make_folders()
-    rename_files_and_folders(str(_dir))
-    move = ThreadMoveFiles(str(_dir), lock)
-    move.start()
-    remove_empty_folders = ThreadRemove(_dir, lock)
-    remove_empty_folders.start()
-
-
+    
 if __name__ == '__main__':
     if platform == "win32":
         folder_sep = '//'
@@ -123,4 +90,7 @@ if __name__ == '__main__':
         'archives': ['zip', 'gz', 'tar'],
         'documents': ['doc', 'docx', 'txt', 'pdf', 'xlsx', 'pptx'],
     }
-    sort()
+    make_folders()
+    rename_files_and_folders(str(_dir))
+    find_files_and_sort(str(_dir))
+    remove_empty_folders(_dir)
