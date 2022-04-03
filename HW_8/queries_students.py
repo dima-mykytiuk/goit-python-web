@@ -9,7 +9,7 @@ def db_connect(sql):
 
 
 # 5 студентов с наибольшим средним баллом по всем предметам.
-def five_students_greatest_avg() -> list:
+def query_one() -> list:
     sql = """
     SELECT s.student, AVG(m.mark), g.group_name
     FROM marks m
@@ -23,32 +23,33 @@ def five_students_greatest_avg() -> list:
 
 
 # 1 студент с наивысшим средним баллом по одному предмету.
-def one_student_greatest_mark_one_subj() -> list:
+def query_two() -> list:
     sql = """
-    SELECT a.subject_name, s.student, AVG(m.mark)
+    SELECT sb.subject_name, s.student, AVG(m.mark)
     FROM marks m
     LEFT JOIN students s ON s.id = m.student_id
-    LEFT JOIN subjects a ON a.id = m.subject_id
-    GROUP BY a.subject_name """
+    LEFT JOIN subjects sb ON sb.id = m.subject_id
+    GROUP BY sb.subject_name
+    """
     return db_connect(sql)
 
 
 # средний балл в группе по одному предмету.
-def group_avg_marks_one_subj() -> list:
+def query_three() -> list:
     sql = """
-    SELECT a.subject_name, AVG(m.mark), g.group_name
+    SELECT sb.subject_name, AVG(m.mark), g.group_name
     FROM marks m
     LEFT JOIN students s ON s.id = m.student_id
-    LEFT JOIN subjects a ON a.id = m.subject_id
+    LEFT JOIN subjects sb ON sb.id = m.subject_id
     LEFT JOIN groupss g ON g.id = s.group_id
     WHERE s.group_id = 1
-    GROUP BY a.subject_name
+    GROUP BY sb.subject_name
     """
     return db_connect(sql)
 
 
 # Средний балл в потоке.
-def avg_marks_thread() -> list:
+def query_four() -> list:
     sql = """
     SELECT AVG(m.mark) AS average_mark_for_all_groups
     FROM marks m
@@ -57,17 +58,17 @@ def avg_marks_thread() -> list:
 
 
 # Какие курсы читает преподаватель.
-def teachers_subject() -> list:
+def query_five() -> list:
     sql = """
-    SELECT s.subject_name, s.teacher_name
-    FROM subjects s
-    GROUP BY s.subject_name
+    SELECT sb.subject_name, sb.teacher_name
+    FROM subjects sb
+    GROUP BY sb.subject_name
     """
     return db_connect(sql)
 
 
 # Список студентов в группе.
-def students_group() -> list:
+def query_six() -> list:
     sql = """
     SELECT s.student, g.group_name
     FROM students s
@@ -79,12 +80,12 @@ def students_group() -> list:
 
 
 # Оценки студентов в группе по предмету.
-def students_marks_subjects() -> list:
+def query_seven() -> list:
     sql = """
-    SELECT s.student, a.subject_name, m.mark, g.group_name
+    SELECT s.student, sb.subject_name, m.mark, g.group_name
     FROM marks m
     LEFT JOIN students s ON s.id = m.student_id
-    LEFT JOIN subjects a ON a.id = m.subject_id
+    LEFT JOIN subjects sb ON sb.id = m.subject_id
     LEFT JOIN groupss g ON g.id = s.group_id
     WHERE s.group_id = 1
     ORDER BY s.student
@@ -93,12 +94,12 @@ def students_marks_subjects() -> list:
 
 
 # Оценки студентов в группе по предмету на последнем занятии..
-def last_lesson_marks() -> list:
+def query_eight() -> list:
     sql = """
-    SELECT s2.subject_name, s.student, m.mark, MAX(m.created_at) AS DateOfLection
+    SELECT sb.subject_name, s.student, m.mark, MAX(m.created_at) AS DateOfLection
     FROM students s
 	LEFT JOIN marks m ON m.student_id = s.id
-	LEFT JOIN subjects s2 ON s2.id = m.subject_id
+	LEFT JOIN subjects sb ON sb.id = m.subject_id
 	GROUP BY s.student
 	ORDER BY m.created_at desc
 	"""
@@ -106,24 +107,24 @@ def last_lesson_marks() -> list:
 
 
 # Список курсов, которые посещает студент.
-def students_courses() -> list:
+def query_nine() -> list:
     sql = """
-    SELECT s.student, s2.subject_name, m.created_at AS Visited
+    SELECT s.student, sb.subject_name, m.created_at AS Visited
     FROM students s
 	LEFT JOIN marks m ON m.student_id = s.id
-	LEFT JOIN subjects s2 ON s2.id = m.subject_id
-	ORDER BY s2.id, -m.created_at
+	LEFT JOIN subjects sb ON sb.id = m.subject_id
+	ORDER BY sb.id, -m.created_at
 	"""
     return db_connect(sql)
 
 
 # Список курсов, которые студенту читает преподаватель.
-def courses_student_teachers() -> list:
+def query_ten() -> list:
     sql = """
-    SELECT s2.subject_name, s.student, s2.teacher_name, m.created_at AS DateOfLection
+    SELECT sb.subject_name, s.student, sb.teacher_name, m.created_at AS DateOfLection
     FROM students s
 	LEFT JOIN marks m ON m.student_id  = s.id
-	LEFT JOIN subjects s2 ON s2.id = m.subject_id
+	LEFT JOIN subjects sb ON sb.id = m.subject_id
 	LEFT JOIN groupss g ON g.id = s.group_id
 	ORDER BY s.student, m.created_at DESC
 	"""
@@ -131,12 +132,12 @@ def courses_student_teachers() -> list:
 
 
 # Средний балл, который преподаватель ставит студенту.
-def avg_mark_student_by_teacher() -> list:
+def query_eleven() -> list:
     sql = """
-    SELECT s2.student, s.teacher_name, s.subject_name, AVG(m.mark)
+    SELECT s.student, sb.teacher_name, sb.subject_name, AVG(m.mark)
     FROM marks m
-    LEFT JOIN subjects s ON s.id = m.subject_id
-    LEFT JOIN students s2 ON s2.id = m.student_id
+    LEFT JOIN subjects sb ON sb.id = m.subject_id
+    LEFT JOIN students s ON s.id = m.student_id
     WHERE m.subject_id = 2
     GROUP BY m.student_id
     """
@@ -144,26 +145,26 @@ def avg_mark_student_by_teacher() -> list:
 
 
 # Средний балл, который ставит преподаватель.
-def avg_mark_by_teacher() -> list:
+def query_twelve() -> list:
     sql = """
-    SELECT AVG(m.mark), s.subject_name, s.teacher_name
+    SELECT AVG(m.mark), sb.subject_name, sb.teacher_name
     FROM marks m
-    LEFT JOIN subjects s ON s.id = m.subject_id
-    GROUP BY s.subject_name
+    LEFT JOIN subjects sb ON sb.id = m.subject_id
+    GROUP BY sb.subject_name
     """
     return db_connect(sql)
 
 
 if __name__ == '__main__':
-    # print(five_students_greatest_avg())  # +++
-    # print(one_student_greatest_mark_one_subj())  # +++++++++
-    # print(group_avg_marks_one_subj())  # +++++
-    # print(avg_marks_thread())  # +++++++++++++
-    # print(teachers_subject())  # +++++++++++++
-    # print(students_group())    # +++++++++++++
-    # print(students_marks_subjects())  # ++++++
-    # print(last_lesson_marks())  # ++++++++++++
-    # print(students_courses())  # +++++++++++++
-    # print(courses_student_teachers())  # +++++
-    # print(avg_mark_student_by_teacher())  # ++
-    # print(avg_mark_by_teacher())  # ++++++++++
+    print(query_one())
+    print(query_two())
+    print(query_three())
+    print(query_four())
+    print(query_five())
+    print(query_six())
+    print(query_seven())
+    print(query_eight())
+    print(query_nine())
+    print(query_ten())
+    print(query_eleven())
+    print(query_twelve())

@@ -8,7 +8,7 @@ NUMBER_TEACHERS = 3
 NUMBER_STUDENTS = 30
 MARKS = 20
 GROUPS = [('KN-1-1',), ('KN-1-2',), ('KN-4-2',)]
-SUBJECTS = ['Mathematics','Physics','Biology','History','Geography']
+SUBJECTS = ['Mathematics', 'Physics', 'Biology', 'History', 'Geography']
 for_marks = []
 fake_data = faker.Faker('ru-RU')
 for _ in range(1000):
@@ -31,21 +31,20 @@ def generate_fake_data(number_students, number_teachers) -> tuple():
 def prepare_data(students, teachers) -> tuple():
     for_students = []
     for_subjects = []
-    for company in students:
-        for_students.append((company, randint(1, 3)))
+    for student in students:
+        for_students.append((student, randint(1, 3)))
     
-    tick = 0
-    tock = 0
+    subject_counter = 0
+    teacher_counter = 0
     for _ in range(len(SUBJECTS) + 1):
-        if tick > len(SUBJECTS) + 1:
+        if subject_counter > len(SUBJECTS) + 1:
             break
-        if tock == len(teachers):
-            tock = 0
+        if teacher_counter == len(teachers):
+            teacher_counter = 0
         else:
-            for_subjects.append((SUBJECTS[tick], teachers[tock]))
-            tick += 1
-            tock += 1
-    print(for_subjects)
+            for_subjects.append((SUBJECTS[subject_counter], teachers[teacher_counter]))
+            subject_counter += 1
+            teacher_counter += 1
     return for_students, for_subjects
 
 
