@@ -8,8 +8,12 @@ def db_connect(sql):
         return cur.fetchall()
 
 
-# 5 студентов с наибольшим средним баллом по всем предметам.
-def query_one() -> list:
+""""
+5 students with the highest AVG mark in all subjects.
+"""
+
+
+def get_five_students_by_mark() -> list:
     sql = """
     SELECT s.student, AVG(m.mark), g.group_name
     FROM marks m
@@ -22,8 +26,12 @@ def query_one() -> list:
     return db_connect(sql)
 
 
-# 1 студент с наивысшим средним баллом по одному предмету.
-def query_two() -> list:
+""""
+1 student with the highest AVG mark in one subject.
+"""
+
+
+def get_one_student_by_mark() -> list:
     sql = """
     SELECT sb.subject_name, s.student, AVG(m.mark)
     FROM marks m
@@ -34,8 +42,12 @@ def query_two() -> list:
     return db_connect(sql)
 
 
-# средний балл в группе по одному предмету.
-def query_three() -> list:
+""""
+AVG mark in the group in one subject.
+"""
+
+
+def get_group_avg_mark_by_subject() -> list:
     sql = """
     SELECT sb.subject_name, AVG(m.mark), g.group_name
     FROM marks m
@@ -48,8 +60,12 @@ def query_three() -> list:
     return db_connect(sql)
 
 
-# Средний балл в потоке.
-def query_four() -> list:
+""""
+AVG mark in all groups.
+"""
+
+
+def get_all_groups_avg_mark() -> list:
     sql = """
     SELECT AVG(m.mark) AS average_mark_for_all_groups
     FROM marks m
@@ -57,8 +73,12 @@ def query_four() -> list:
     return db_connect(sql)
 
 
-# Какие курсы читает преподаватель.
-def query_five() -> list:
+"""
+What courses does the teacher teach.
+"""
+
+
+def get_courses_by_teachers() -> list:
     sql = """
     SELECT sb.subject_name, sb.teacher_name
     FROM subjects sb
@@ -67,8 +87,12 @@ def query_five() -> list:
     return db_connect(sql)
 
 
-# Список студентов в группе.
-def query_six() -> list:
+"""
+List of students in the group.
+"""
+
+
+def get_students_by_group() -> list:
     sql = """
     SELECT s.student, g.group_name
     FROM students s
@@ -79,8 +103,12 @@ def query_six() -> list:
     return db_connect(sql)
 
 
-# Оценки студентов в группе по предмету.
-def query_seven() -> list:
+"""
+Grades of students in the group on the subject.
+"""
+
+
+def get_students_marks_by_subject() -> list:
     sql = """
     SELECT s.student, sb.subject_name, m.mark, g.group_name
     FROM marks m
@@ -93,8 +121,12 @@ def query_seven() -> list:
     return db_connect(sql)
 
 
-# Оценки студентов в группе по предмету на последнем занятии..
-def query_eight() -> list:
+"""
+Grades of students in the group on the subject at the last lesson.
+"""
+
+
+def get_last_student_mark() -> list:
     sql = """
     SELECT sb.subject_name, s.student, m.mark, MAX(m.created_at) AS DateOfLection
     FROM students s
@@ -106,8 +138,12 @@ def query_eight() -> list:
     return db_connect(sql)
 
 
-# Список курсов, которые посещает студент.
-def query_nine() -> list:
+"""
+List of courses the student is attending.
+"""
+
+
+def get_courses_attendance_by_students() -> list:
     sql = """
     SELECT s.student, sb.subject_name, m.created_at AS Visited
     FROM students s
@@ -118,8 +154,12 @@ def query_nine() -> list:
     return db_connect(sql)
 
 
-# Список курсов, которые студенту читает преподаватель.
-def query_ten() -> list:
+"""
+List of courses that the teacher reads to the student.
+"""
+
+
+def get_courses_teacher_reads_by_students() -> list:
     sql = """
     SELECT sb.subject_name, s.student, sb.teacher_name, m.created_at AS DateOfLection
     FROM students s
@@ -131,8 +171,12 @@ def query_ten() -> list:
     return db_connect(sql)
 
 
-# Средний балл, который преподаватель ставит студенту.
-def query_eleven() -> list:
+"""
+AVG mark given by the teacher to the student.
+"""
+
+
+def get_avg_mark_for_student_by_teacher() -> list:
     sql = """
     SELECT s.student, sb.teacher_name, sb.subject_name, AVG(m.mark)
     FROM marks m
@@ -144,8 +188,12 @@ def query_eleven() -> list:
     return db_connect(sql)
 
 
-# Средний балл, который ставит преподаватель.
-def query_twelve() -> list:
+"""
+AVG mark given by the teacher.
+"""
+
+
+def get_avg_mark_by_teacher() -> list:
     sql = """
     SELECT AVG(m.mark), sb.subject_name, sb.teacher_name
     FROM marks m
@@ -156,15 +204,15 @@ def query_twelve() -> list:
 
 
 if __name__ == '__main__':
-    print(query_one())
-    print(query_two())
-    print(query_three())
-    print(query_four())
-    print(query_five())
-    print(query_six())
-    print(query_seven())
-    print(query_eight())
-    print(query_nine())
-    print(query_ten())
-    print(query_eleven())
-    print(query_twelve())
+    print(get_five_students_by_mark())
+    print(get_one_student_by_mark())
+    print(get_group_avg_mark_by_subject())
+    print(get_all_groups_avg_mark())
+    print(get_courses_by_teachers())
+    print(get_students_by_group())
+    print(get_students_marks_by_subject())
+    print(get_last_student_mark())
+    print(get_courses_attendance_by_students())
+    print(get_courses_teacher_reads_by_students())
+    print(get_avg_mark_for_student_by_teacher())
+    print(get_avg_mark_by_teacher())
