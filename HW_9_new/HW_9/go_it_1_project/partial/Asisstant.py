@@ -1,6 +1,7 @@
 from AdressBook import *
 from NoteBook import *
-from check_validation import *
+from HW_9_new.HW_9.check_validation import *
+from HW_9_new.HW_9.sql_changes import *
 
 
 class Asisstant:
@@ -55,107 +56,64 @@ class Asisstant:
         while name_validation is not True:
             new_name = input('Name must be at least 3 symbols, Try again: ')
             name_validation = check_name(new_name)
-        with sqlite3.connect('/Users/dimamykytiuk/PycharmProjects/go_it_web/goit-python-web/HW_9/contact_book.db') as con:
-            cur = con.cursor()
-            sql = """
-            UPDATE contacts
-            SET name= ?
-            WHERE name= ?
-            """
-            cur.execute(sql, [new_name, old_name])
-        return f'Successfully changed {old_name} to {new_name}'
+        return change_name_in_db(old_name, new_name)
 
     # func to change phone in database with validation
     def __change_phone(self) -> str:
-        name_phone = input('Write the name of whom you want to change the phone: ')
-        check_name_database = check_name_in_database(name_phone)
+        phone_name = input('Write the name of whom you want to change the phone: ')
+        check_name_database = check_name_in_database(phone_name)
         while check_name_database is not True:
-            name_phone = input('This name is not in the database, try again: ')
-            check_name_database = check_name_in_database(name_phone)
+            phone_name = input('This name is not in the database, try again: ')
+            check_name_database = check_name_in_database(phone_name)
         new_phone = input("Write new phone: ")
         phone_validation = check_phone(new_phone)
         while phone_validation is not True:
             new_phone = input('Invalid format for phone, please enter phone in format +380123456789: ')
             phone_validation = check_phone(new_phone)
-        with sqlite3.connect('/Users/dimamykytiuk/PycharmProjects/go_it_web/goit-python-web/HW_9/contact_book.db') as con:
-            cur = con.cursor()
-            sql = """
-            UPDATE contacts
-            SET phone= ?
-            WHERE name= ?
-            """
-            cur.execute(sql, [new_phone, name_phone])
-        return f"Successfully changed phone for contact {name_phone}"
+        return change_phone_in_db(new_phone, phone_name)
 
     # func to change birthday in database with validation
     def __change_birthday(self) -> str:
-        name_birthday = input('Write the name of whom you want to change birthday: ')
-        check_name_database = check_name_in_database(name_birthday)
+        birthday_name = input('Write the name of whom you want to change birthday: ')
+        check_name_database = check_name_in_database(birthday_name)
         while check_name_database is not True:
-            name_birthday = input('This name is not in the database, try again: ')
-            check_name_database = check_name_in_database(name_birthday)
+            birthday_name = input('This name is not in the database, try again: ')
+            check_name_database = check_name_in_database(birthday_name)
         new_birthday = input("Write new birthday: ")
         birthday_validation = check_birthday(new_birthday)
         while birthday_validation is not True:
             new_birthday = input('Incorrect format date was given, Try again: ')
             birthday_validation = check_birthday(new_birthday)
         new_birthday = date.fromisoformat(new_birthday)
-        with sqlite3.connect(
-                '/Users/dimamykytiuk/PycharmProjects/go_it_web/goit-python-web/HW_9/contact_book.db') as con:
-            cur = con.cursor()
-            sql = """
-            UPDATE contacts
-            SET birthday= ?
-            WHERE name= ?
-            """
-            cur.execute(sql, [new_birthday, name_birthday])
-        return f"Successfully changed birthday for contact {name_birthday}"
+        return change_birthday_in_db(new_birthday, birthday_name)
 
     # func to change email in database with validation
     def __change_email(self) -> str:
-        name_email = input('Write the name of whom you want to change email: ')
-        check_name_database = check_name_in_database(name_email)
+        email_name = input('Write the name of whom you want to change email: ')
+        check_name_database = check_name_in_database(email_name)
         while check_name_database is not True:
-            name_email = input('This name is not in the database, try again: ')
-            check_name_database = check_name_in_database(name_email)
+            email_name = input('This name is not in the database, try again: ')
+            check_name_database = check_name_in_database(email_name)
         new_email = input("Write new email: ")
         email_validation = check_email(new_email)
         while email_validation is not True:
             new_email = input('Invalid email, Try again: ')
             email_validation = check_email(new_email)
-        with sqlite3.connect(
-                '/Users/dimamykytiuk/PycharmProjects/go_it_web/goit-python-web/HW_9/contact_book.db') as con:
-            cur = con.cursor()
-            sql = """
-            UPDATE contacts
-            SET email= ?
-            WHERE name= ?
-            """
-            cur.execute(sql, [new_email, name_email])
-        return f"Successfully changed email for contact {name_email}"
+        return change_email_in_db(new_email, email_name)
 
     # func to change address in database with validation
     def __change_address(self) -> str:
-        name_address = input('Write the name of whom you want to change address: ')
-        check_name_database = check_name_in_database(name_address)
+        address_name = input('Write the name of whom you want to change address: ')
+        check_name_database = check_name_in_database(address_name)
         while check_name_database is not True:
-            name_address = input('This name is not in the database, try again: ')
-            check_name_database = check_name_in_database(name_address)
+            address_name = input('This name is not in the database, try again: ')
+            check_name_database = check_name_in_database(address_name)
         new_address = input("Write new address: ")
         address_validation = check_address(new_address)
         while address_validation is not True:
             new_address = input('Invalid address, Try again: ')
             address_validation = check_address(new_address)
-        with sqlite3.connect(
-                '/Users/dimamykytiuk/PycharmProjects/go_it_web/goit-python-web/HW_9/contact_book.db') as con:
-            cur = con.cursor()
-            sql = """
-            UPDATE contacts
-            SET address= ?
-            WHERE name= ?
-            """
-            cur.execute(sql, [new_address, name_address])
-        return f"Successfully changed address for contact {name_address}"
+        return change_address_in_db(new_address, address_name)
 
     # func to start function depends on what user want to change
     def change_contact(self) -> str:
@@ -180,16 +138,7 @@ class Asisstant:
         while check_name_database is not True:
             name_to_delete = input('This name is not in the database, try again: ')
             check_name_database = check_name_in_database(name_to_delete)
-        with sqlite3.connect(
-                '/Users/dimamykytiuk/PycharmProjects/go_it_web/goit-python-web/HW_9/contact_book.db') as con:
-            cur = con.cursor()
-            sql = """
-            DELETE
-            FROM contacts
-            WHERE name= ?
-            """
-            cur.execute(sql, [name_to_delete])
-        return f"Successfully deleted contact {name_to_delete}"
+        return del_contact_from_db(name_to_delete)
 
     # func to find contact from database with validation
     def find_contact(self) -> list:
@@ -198,16 +147,7 @@ class Asisstant:
         while check_name_database is not True:
             name_to_find = input('This name is not in the database, try again: ')
             check_name_database = check_name_in_database(name_to_find)
-        with sqlite3.connect(
-                '/Users/dimamykytiuk/PycharmProjects/go_it_web/goit-python-web/HW_9/contact_book.db') as con:
-            cur = con.cursor()
-            sql = """
-            SELECT c.name, c.phone, c.birthday, c.email, c.address
-            FROM contacts c
-            WHERE name= ?
-            """
-            cur.execute(sql, [name_to_find])
-            return cur.fetchall()
+        return get_contact_from_db(name_to_find)
 
     # func to get birthdays in days from database
     def get_birthdays(self) -> list:
@@ -218,18 +158,6 @@ class Asisstant:
             )
         days = int(days)
         return get_birthday_in_database(days)
-    
-    # func to display all contacts from database
-    def show_all_contacts(self) -> list:
-        with sqlite3.connect(
-                '/Users/dimamykytiuk/PycharmProjects/go_it_web/goit-python-web/HW_9/contact_book.db') as con:
-            cur = con.cursor()
-            sql = """
-            SELECT c.name, c.phone, c.birthday, c.email, c.address
-            FROM contacts c
-            """
-            cur.execute(sql)
-            return cur.fetchall()
     
     # func to add note in database
     def add_note(self) -> str:
@@ -250,20 +178,7 @@ class Asisstant:
             add_note = Notes(text=note_name, desc=note_desc)
             self.note_book.save_note_in_database(add_note)
             return f'Successfully add note {note_name} to notebook'
-    
-    # func to display all notes
-    def show_notes(self) -> list:
-        with sqlite3.connect(
-                '/Users/dimamykytiuk/PycharmProjects/go_it_web/goit-python-web/HW_9/contact_book.db') as con:
-            cur = con.cursor()
-            sql = """
-            SELECT n.name
-            FROM notes n
-            ORDER BY created
-            """
-            cur.execute(sql)
-            return cur.fetchall()
-    
+       
     # func to find 1 note by name
     def find_note_by_name(self) -> list:
         note_name = input("Write down note name: ")
@@ -271,16 +186,7 @@ class Asisstant:
         while check_note_database is not True:
             note_name = input('This note is not in the database, try again: ')
             check_note_database = check_note(note_name)
-        with sqlite3.connect(
-                '/Users/dimamykytiuk/PycharmProjects/go_it_web/goit-python-web/HW_9/contact_book.db') as con:
-            cur = con.cursor()
-            sql = """
-            SELECT n2.name, n2.created
-            FROM notes n2
-            WHERE name = ?
-            """
-            cur.execute(sql, [note_name])
-            return cur.fetchall()
+        return get_note_by_name(note_name)
     
     # func to change note
     def change_note(self) -> str:
@@ -294,16 +200,7 @@ class Asisstant:
         while note_validation is not True:
             new_note = input('Name must be at least 3 symbols, Try again: ')
             note_validation = check_note_validation(new_note)
-        with sqlite3.connect(
-                '/Users/dimamykytiuk/PycharmProjects/go_it_web/goit-python-web/HW_9/contact_book.db') as con:
-            cur = con.cursor()
-            sql = """
-            UPDATE notes
-            SET name= ?
-            WHERE name= ?
-            """
-            cur.execute(sql, [new_note, note_to_change])
-        return f'Successfully changed {note_to_change} to {new_note}'
+        return change_note_in_db(new_note,note_to_change)
     
     # func to delete note
     def delete_note(self) -> str:
@@ -312,16 +209,7 @@ class Asisstant:
         while check_note_database is not True:
             note_to_delete = input('This note is not in the database, try again: ')
             check_note_database = check_note(note_to_delete)
-        with sqlite3.connect(
-                '/Users/dimamykytiuk/PycharmProjects/go_it_web/goit-python-web/HW_9/contact_book.db') as con:
-            cur = con.cursor()
-            sql = """
-            DELETE
-            FROM notes
-            WHERE name= ?
-            """
-            cur.execute(sql, [note_to_delete])
-        return f"Successfully deleted note {note_to_delete}"
+        return del_note_from_db(note_to_delete)
 
     # func to add tags to note
     def add_tags(self) -> str:
@@ -330,7 +218,7 @@ class Asisstant:
         while check_note_database is not True:
             note_to_add_tags = input('This note is not in the database, try again: ')
             check_note_database = check_note(note_to_add_tags)
-        note_id = find_note_id(note_to_add_tags)
+        note_id = get_note_id_from_db(note_to_add_tags)
         tag_to_add = input('Write down a tag: ')
         check_tag_database = check_note(tag_to_add)
         while check_tag_database is not True:
@@ -338,7 +226,7 @@ class Asisstant:
             check_tag_database = check_note(tag_to_add)
         insert_into_records(id=note_id, tag=tag_to_add)
         insert_into_tags(tag=tag_to_add)
-        tag_id = find_tag_id(tag_to_add)
+        tag_id = get_tag_id_from_db(tag_to_add)
         insert_into_m2m_table(id=note_id, tag=tag_id)
         return f"Successfully add tags"
     

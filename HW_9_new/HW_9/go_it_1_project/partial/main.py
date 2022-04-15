@@ -1,6 +1,6 @@
 from Asisstant import Asisstant
 from Sorter import Sorter
-
+from HW_9_new.HW_9.sql_changes import get_all_contacts_from_db, get_all_notes
 
 def main():
     jarvis = Asisstant()
@@ -26,9 +26,9 @@ def main():
         "del_contact": jarvis.del_contact,
         "find_contact": jarvis.find_contact,
         "get_birthdays": jarvis.get_birthdays,
-        "show_all": jarvis.show_all_contacts,
+        "show_all": get_all_contacts_from_db,
         "add_note": jarvis.add_note,
-        "show_notes": jarvis.show_notes,
+        "show_notes": get_all_notes,
         "change_note": jarvis.change_note,
         "delete_note": jarvis.delete_note,
         "find_note_by_name": jarvis.find_note_by_name,
