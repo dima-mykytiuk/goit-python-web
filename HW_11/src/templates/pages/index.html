@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Montserrat:wght@400;700&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <title>Jarvis Assistant</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <div class="header_inner">
+          <a class="header_logo" href="/">Jarvis</a>
+          <nav class="nav">
+            <a class="nav_link" href="#anchor_about">About</a>
+            <a class="nav_link" href="#anchor_contacts">ContactBook</a>
+            <a class="nav_link" href="#anchor_notes">NoteBook</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+    <div class="intro">
+      <div class="container">
+        <div class="intro_inner">
+          <h2 class="intro_suptitle">Jarvis</h2>
+          <h1 class="intro_title">Welcome</h1>
+          <a class="btn" href="#anchor_about">Learn More</a>
+        </div>
+      </div>
+    </div>
+    <a name="anchor_about"></a>
+    <section class="section">
+      <div class="container">
+        <div class="section_header">
+          <h3 class="section_suptitle">What we do</h3>
+          <h2 class="section_title">story about us</h2>
+          <div class="section_text_about">
+            <p>
+              At the moment, data storage is a very important thing. Our website may offer you a place to store,
+              edit and search your contacts and notes. I hope our website makes it easy for you to store
+              your contacts and notes.
+            </p>
+          </div>
+        </div>
+        <div class="about">
+          <div class="about_item">
+            <div class="about_img">
+              <img src="{{ url_for('static', filename='image/about/1.jpg') }}" alt="" />
+            </div>
+          </div>
+          <div class="about_item">
+            <div class="about_img">
+              <img src="{{ url_for('static', filename='image/about/2.jpg') }}" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="statistics">
+      <div class="container">
+        <div class="stat">
+          <div class="stat_item">
+            <div class="stat_count">{{contacts| length}}</div>
+            <div class="stat_text">Contacts</div>
+          </div>
+          <div class="stat_item">
+            <div class="stat_count">{{notes| length}}</div>
+            <div class="stat_text">Notes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a name="anchor_contacts"></a>
+    <section class="section section--contacts">
+      <div class="container">
+        <div class="section_header">
+          <h3 class="section_suptitle">ContactBook</h3>
+          <h2 class="section_title">All your contacts are here</h2>
+          <div class="search_contact">
+            <form class="find_something" method="get">
+              <input class="inp_search" type="search" placeholder="Search" name="find_contact">
+              <button class="submit_btn" type="submit">Search</button>
+              <a class="show_all_btn" href="{{ url_for('index', _anchor='anchor_contacts') }}">Show_all</a>
+            </form>
+          </div>
+        </div>
+        {% if contacts| length >0 %}
+        <div class="flex-row-container">
+          {% for contact in contacts %}
+          <div class="flex-row-item">
+            <div class="services_item">
+                <img
+                  class="services_icon"
+                  src="{{ url_for('static', filename='image/services/creativity.png') }}"
+                  alt=""
+                />
+                <div class="services_title">{{contact.name}}</div>
+                <div class="services_text">
+                  <li>phone: {{contact.phone}}</li>
+                  <li>birthday: {{contact.birthday}}</li>
+                  <li>email: {{contact.email}}</li>
+                  <li>address: {{contact.address}}</li>
+                </div>
+                <div class="change_cnt_btn">
+                  <a class="change_btn" href="/edit/{{contact.id}}">change</a>
+                  <a class="delete_btn" href="{{ url_for('delete_contact', id=contact.id, _anchor='anchor_contacts') }}">delete</a>
+                </div>
+              </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <h2 class="no_notes">NO CONTACTS YET</h2>
+        {% endif %}
+      </div>
+      <a class="add_new_btn" href="/contact/">Add new contact</a>
+    </section>
+
+    <a name="anchor_notes"></a>
+    <section class="section section--notebook">
+      <div class="container">
+        <div class="section_header">
+          <h3 class="section_suptitle">NoteBook</h3>
+          <h2 class="section_title">All your notes are here</h2>
+          <div class="search_contact">
+            <form class="find_something" method="get">
+              <input class="inp_search" type="search" placeholder="Search" name="q">
+              <button class="submit_btn" type="submit">Search</button>
+              <a class="show_all_btn" href="{{ url_for('index', _anchor='anchor_notes') }}">Show_all</a>
+            </form>
+          </div>
+        </div>
+        {% if notes| length >0 %}
+        <div class="flex-row-container">
+          {% for note in notes %}
+          <div class="flex-row-item_note">
+            <div class="services_item">
+                <img
+                  class="services_icon"
+                  src="{{ url_for('static', filename='image/services/creativity.png') }}"
+                  alt=""
+                />
+                <div class="services_title">{{note.name}}</div>
+                <div class="services_text">
+                  <li>Description: {{note.description}}</li>
+                  <li>Tags: {{ note.tags|join(', ')}}</li>
+                  {% if note.done %}
+                  <li>Статус: <ins>Выполнена</ins></li>
+                  {% else %}
+                  <li>Статус: <i>Не выполнена</i><a class="done_btn" href="{{ url_for('done', id=note.id, _anchor='anchor_notes') }}">Done</a></li>
+                  {% endif %}
+                  <a class="change_btn" href="/edit_note/{{note.id}}">change</a>
+                  <a class="delete_btn" href="{{ url_for('delete_note', id=note.id, _anchor='anchor_notes') }}">delete</a>
+                </div>
+              </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <h2 class="no_notes">NO NOTES YET</h2>
+        {% endif %}
+      </div>
+    <a class="add_new_btn" href="/note/">Add new note</a>
+  </section>
+
+<footer class="footer-distributed">
+
+			<div class="footer-left">
+
+				<h3>Dima<span>Mykytiuk</span></h3>
+
+				<p class="footer-links">
+					<a href="/">Home</a>
+					·
+					<a href="#anchor_contacts">Contactbook</a>
+					·
+					<a href="#anchor_notes">Notebook</a>
+				</p>
+
+				<p class="footer-company-name">DM © 2022</p>
+
+				<div class="footer-icons">
+
+					<a href="https://www.youtube.com/channel/UCEjpu7EdsT4DIQkageJL2cg/featured"><i class="fa fa-youtube"></i></a>
+					<a href="https://twitter.com/mykytiuk_dima"><i class="fa fa-twitter"></i></a>
+					<a href="https://www.instagram.com/smilek2012/"><i class="fa fa-instagram"></i></a>
+					<a href="https://github.com/smilecool2012"><i class="fa fa-github"></i></a>
+
+				</div>
+
+			</div>
+
+			<div class="footer-right">
+
+				<p>Contact Us</p>
+
+				<form action="#" method="post">
+
+					<input type="text" name="email" placeholder="Email">
+					<textarea name="message" placeholder="Message"></textarea>
+					<button>Send</button>
+
+				</form>
+
+			</div>
+
+		</footer>
+
+
+<!--<script type="text/javascript">-->
+<!--  const inp = document.querySelector(".inp_search_note");-->
+<!--  const sbm = document.querySelector(".submit_btn_note");-->
+<!--  sbm.addEventListener("click", () => {-->
+<!--    console.log(inp.value)-->
+<!--    window.location=(`/find/${inp.value}`);-->
+<!--    // window.open(`/find/${inp.value}`, `_self`)-->
+<!--  })-->
+<!--</script>-->
+  </body>
+</html>

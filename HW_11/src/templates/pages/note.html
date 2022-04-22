@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Montserrat:wght@400;700&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <title>Jarvis Assistant</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <div class="header_inner">
+          <a class="header_logo" href="/">Jarvis</a>
+          <nav class="nav">
+            <a class="nav_link" href="/">Main page</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+    <div class="intro">
+      <div class="container">
+        <div class="intro_inner">
+          <h2 class="intro_suptitle">Jarvis</h2>
+          <h1 class="intro_title_note">Add Note</h1>
+          <form method="POST" action="/note" class="add_note_form">
+        <div class="note_name">
+          <label class="note_label"
+            >Название заметки:
+            <input class="note_input" type="text" name="name" required />
+          </label>
+        </div>
+        <div class="note_name">
+          <label class="note_label"
+            >Описание заметки:
+            <input class="note_input" type="text" name="description" required />
+          </label>
+        </div>
+        <div class="note_name">
+          <label class="tag_label">Выберите теги:</label>
+            <select class="select_tags" name="tags" multiple="multiple" required>
+              {% for tag in tags %} '
+              <option value="{{tag.name}}">{{tag.name}}</option>
+              ' {% endfor %}
+            </select>
+        </div>
+        <div class="grid">
+          <button type="reset" class="reset_btn_note">Сбросить</button>
+          <button type="submit" class="submit_btn_note">Создать</button>
+        </div>
+          </form>
+        </div>
+        <a href="/tag/" role="button" class="add_tag_btn">Добавить Тег</a>
+      </div>
+    </div>
+  </body>
