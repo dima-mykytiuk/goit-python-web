@@ -1,0 +1,413 @@
+/*font-family: 'Kaushan Script', cursive;*/
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  font-size: 15px;
+  color: #333;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+hr {
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin: 40px 0;
+  border: 0;
+  background-color: #e5e5e5;
+}
+/*1 Block*/
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  background-image: url("img/ftb.jpg");
+  background-size: cover;
+}
+.intro_inner {
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  text-align: center;
+}
+.intro_title {
+  color: white;
+  font-size: 150px;
+  font-weight: bold;
+  text-transform: uppercase;
+  line-height: 1;
+  font-family: "Kaushan Script", cursive;
+}
+.intro_suptitle {
+  margin-bottom: 20px;
+  font-size: 72px;
+  font-family: "Kaushan Script", cursive;
+  color: white;
+}
+.header {
+  width: 100%;
+  padding-top: 30px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+.header_inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header_logo {
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+  font-family: "Kaushan Script", cursive;
+  text-decoration: none;
+}
+.nav {
+  font-size: 14px;
+  text-transform: uppercase;
+}
+.nav_link {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  margin: 0 15px;
+  color: white;
+  text-decoration: none;
+  transition: color 0.1s linear;
+  font-family: "Kaushan Script", cursive;
+}
+.nav_link.active {
+  color: #fce38a;
+}
+.nav_link:hover {
+  color: #fce38a;
+}
+.nav_link:after {
+  content: "";
+  display: block;
+  opacity: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #fce38a;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1;
+  transition: opacity 0.1s linear;
+}
+.nav_link:hover:after,
+.nav_link.active:after {
+  opacity: 1;
+}
+.links_for_results{
+  margin-top: 20px;
+  margin-left: 150px;
+}
+.btn {
+  display: inline-block;
+  justify-content: center;
+  width: 30%;
+  text-align: center;
+  vertical-align: top;
+  padding: 8px 30px;
+  border: 2px solid black;
+  border-radius: 8px;
+  text-decoration: none;
+  color: black;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background 0.1s linear, color 0.1s linear;
+}
+.btn:hover {
+  background-color: #7be0bb;
+  color: black;
+}
+
+/*show results*/
+
+.section {
+  padding: 80px 0;
+}
+.nhl_body{
+  background: url(img/green_back.jpg) center repeat-y;
+}
+
+.new_nhl_body{
+  background: url(img/ice_3.jpeg) center repeat-y;
+}
+.section_header {
+  width: 100%;
+  max-width: 950px;
+  margin: 40px auto 10px;
+  text-align: center;
+}
+.section_suptitle {
+  font-family: "Kaushan Script", cursive;
+  font-size: 24px;
+  color: white;
+}
+.section_title {
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+}
+.section_text {
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+  color: #999;
+}
+
+.stat_text {
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.change_btn{
+  position: absolute;
+  width: 100px ;
+  height: 20px;
+  margin-top: 10px;
+  border: 1px solid black;
+  transition-duration: 0.4s;
+  background-color: white;
+  font-family: "Roboto", sans-serif;
+  border-radius: 8px;
+  color: #999;
+  text-align: center;
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.delete_btn{
+  position: absolute;
+  width: 100px ;
+  height: 20px;
+  margin-top: 10px;
+  margin-left: 130px;
+  border: 1px solid black;
+  transition-duration: 0.4s;
+  background-color: white;
+  font-family: "Roboto", sans-serif;
+  border-radius: 8px;
+  color: #999;
+  text-align: center;
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.delete_btn:hover{
+  background-color: #7be0bb; /* Green */
+  color: black;
+}
+
+.change_btn:hover{
+  background-color: #7be0bb; /* Green */
+  color: black;
+}
+
+.add_new_btn{
+  position: absolute;
+  width: 25% ;
+  margin-top: 40px;
+  margin-bottom: 80px;
+  left: 40%;
+  border: 1px solid black;
+  transition-duration: 0.4s;
+  background-color: white;
+  font-family: "Roboto", sans-serif;
+  border-radius: 8px;
+  color: #999;
+  text-align: center;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.add_new_btn:hover{
+  background-color: #7be0bb; /* Green */
+  color: black;
+}
+
+.search_contact{
+  width: 50% ;
+  height: 50px;
+  margin-top: 30px;
+  margin-left: 30%;
+  font-family: "Roboto", sans-serif;
+  background-color: transparent;
+}
+
+.inp_search{
+  margin-top: 5px;
+  width: 70%;
+  height: 80%;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 8px;
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+}
+
+.submit_btn{
+  margin-top: 5px;
+  margin-left: 2%;
+  width: 20% ;
+  height: 80% ;
+  border: 1px solid black;
+  transition-duration: 0.4s;
+  background-color: #7be0bb;
+  font-family: "Roboto", sans-serif;
+  border-radius: 8px;
+  color: black;
+  text-align: center;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.submit_btn:hover{
+  background-color: white; /* Green */
+  color: black;
+}
+
+.flex-row-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.flex-row-container > .flex-row-item {
+  margin-top: 5px;
+  width: 280px;
+  height: 90px;
+}
+
+.flex-row-container > .flex-row-item_note{
+  margin-top: 1px;
+  margin-bottom: 10px;
+  width: 371px;
+  height: 100px;
+}
+
+.services_item{
+  color: white;
+}
+
+.services_icon{
+  margin-top: 3px;
+  margin-left: 3px;
+}
+
+.header_nhl {
+  width: 100%;
+  padding-top: 30px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+.header_inner_nhl {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header_logo_nhl {
+  font-size: 40px;
+  font-weight: bold;
+  color: black;
+  font-family: "Kaushan Script", cursive;
+  text-decoration: none;
+}
+.nav_nhl {
+  font-size: 14px;
+  text-transform: uppercase;
+}
+.nav_link_nhl {
+  font-size: 30px;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  margin: 0 15px;
+  color: black;
+  text-decoration: none;
+  transition: color 0.1s linear;
+  font-family: "Kaushan Script", cursive;
+}
+.nav_link_nhl.active {
+  color: #fce38a;
+}
+.nav_link_nhl:hover {
+  color: #fce38a;
+}
+.nav_link_nhl:after {
+  content: "";
+  display: block;
+  opacity: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #fce38a;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1;
+  transition: opacity 0.1s linear;
+}
+.nav_link_nhl:hover:after,
+.nav_link_nhl.active:after {
+  opacity: 1;
+}
+
+.section_suptitle_nhl{
+  font-family: "Kaushan Script", cursive;
+  font-size: 24px;
+  color: black;
+}
+
+.section_title_nhl{
+  font-size: 30px;
+  font-weight: bold;
+  color: black;
+  text-transform: uppercase;
+}
+
+.services_item_nhl{
+  color: black;
+}
+
+.no_matches{
+  box-sizing: border-box;
+  text-align: center;
+  font-family: "Kaushan Script", cursive;
+  font-size: 35px;
+  color: white;
+  text-transform: uppercase;
+}
+
+.no_matches_nhl{
+  box-sizing: border-box;
+  text-align: center;
+  font-family: "Kaushan Script", cursive;
+  font-size: 35px;
+  color: black;
+  text-transform: uppercase;
+}

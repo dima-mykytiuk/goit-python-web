@@ -1,14 +1,5 @@
-from datetime import datetime
-
-import faker
-from sqlalchemy import Column, Integer, String, Boolean, create_engine, Date
-from sqlalchemy.orm import relationship
-from sqlalchemy.sql.schema import ForeignKey, Table, MetaData
-from sqlalchemy.sql.sqltypes import DateTime
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import Column, Integer, String, Date
 from db.db import Base, engine, db_session
-
-# таблица для связи many2many
 
 
 class Matches(Base):
@@ -32,6 +23,7 @@ class Matches_Italian_Football(Base):
     id = Column(Integer, primary_key=True)
     match = Column(String(50), nullable=False)
     score = Column(String(15), nullable=True)
+
 
 if __name__ == "__main__":
     Base.metadata.create_all(engine)

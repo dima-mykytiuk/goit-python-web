@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href='css/styles.css' />
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Montserrat:wght@400;700&family=Roboto&display=swap" rel="stylesheet"/>
+    <title>Title</title>
+</head>
+<body class="new_nhl_body">
+    <header class="header_nhl">
+      <div class="container">
+        <div class="header_inner_nhl">
+          <a class="header_logo_nhl" href="/">Parser</a>
+          <nav class="nav_nhl">
+            <a class="nav_link_nhl" href="/">Main page</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+<section class="section section--nhl">
+      <div class="container">
+        <div class="section_header">
+          <h3 class="section_suptitle_nhl">Matches</h3>
+          <h2 class="section_title_nhl">NHL Matches from tribuna.com</h2>
+          <div class="search_contact">
+          </div>
+        </div>
+        {% if matches| length >0 %}
+        <div class="flex-row-container">
+            {% for match in matches %}
+          <div class="flex-row-item">
+            <div class="services_item_nhl">
+                <img class="services_icon" src="css/img/creativity.png" alt=""/>
+                <div class="services_title">{{match.nhl_match}}</div>
+                <div class="services_text">
+                  <li>Счет: {{match.score}}</li>
+                  <li>Дата матча: {{match.match_date}}</li>
+                </div>
+              </div>
+          </div>
+            {% endfor %}
+          </div>
+        {% else %}
+        <h2 class="no_matches_nhl">NO MATCHES YET</h2>
+        {% endif %}
+        </div>
+      </div>
+    </section>
+</body>
+</html>

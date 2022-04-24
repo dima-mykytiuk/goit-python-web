@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href='css/styles.css' />
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Montserrat:wght@400;700&family=Roboto&display=swap" rel="stylesheet"/>
+    <title>Title</title>
+</head>
+<body class="nhl_body">
+    <header class="header">
+      <div class="container">
+        <div class="header_inner">
+            <a class="header_logo" href="/">Parser</a>
+            <nav class="nav">
+            <a class="nav_link" href="/">Main page</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+<section class="section section--italian">
+      <div class="container">
+        <div class="section_header">
+          <h3 class="section_suptitle">Matches</h3>
+          <h2 class="section_title">Italian Matches from football.ua</h2>
+          <div class="search_contact">
+          </div>
+        </div>
+        {% if matches| length >0 %}
+        <div class="flex-row-container">
+            {% for match in matches %}
+          <div class="flex-row-item">
+            <div class="services_item">
+                <img class="services_icon" src="css/img/creativity.png" alt=""/>
+                <div class="services_title">{{match.match}}</div>
+                <div class="services_text">
+                  <li>Счет: {{match.score}}</li>
+                </div>
+              </div>
+          </div>
+            {% endfor %}
+          </div>
+         {% else %}
+        <h2 class="no_matches">NO MATCHES YET</h2>
+        {% endif %}
+        </div>
+      </div>
+    </section>
+</body>
+</html>
