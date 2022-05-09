@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}
+    Show info :: {{ block.super }}
+{% endblock %}
+
+{% block welcome %}
+    <script>
+        $(function () {
+            var ctx = document.getElementById("outcome_chart").getContext('2d');
+            var data = {
+                labels: [{% for item in date_outcome %}'{{ item }}',{% endfor %}],
+                datasets: [{
+                    label: 'Outcome from {% for item in date_from %}{{ item }}{% endfor %} to {% for item in date_to %}{{ item }}{% endfor %}',
+                    data: [{% for item in sum_outcome %}'{{ item }}',{% endfor %}],
+                    backgroundColor: ["#635a5a"],
+                    borderColor: [
+                        'rgba(0,0,0,1)'],
+                    tension: 0.4,
+                    fill: true
+                }]
+            };
+            var myDoughnutChart = new Chart(ctx, {
+                type: 'line',
+                data: data,
+            });
+
+            var ctx_2 = document.getElementById("income_chart").getContext('2d');
+            var data_2 = {
+                datasets: [{
+                    label: 'Income from {% for item in date_from %}{{ item }}{% endfor %} to {% for item in date_to %}{{ item }}{% endfor %}',
+                    data: [{% for item in sum_income %}'{{ item }}',{% endfor %}],
+                    backgroundColor: ["#635a5a"],
+                    borderColor: [
+                        'rgba(0,0,0,1)'],
+                    tension: 0.4,
+                    fill: true
+                }],
+                labels: [{% for item in date_income %}'{{ item }}',{% endfor %}]
+            };
+            var myDoughnutChart_2 = new Chart(ctx_2, {
+                type: 'line',
+                data: data_2,
+            });
+            var ctx_3 = document.getElementById("category_chart").getContext('2d');
+            var data_3 = {
+                labels: [{% for item in category_name %}'{{ item }}',{% endfor %}],
+                datasets: [{
+                    label: 'Outcome by category',
+                    data: [{% for item in sum_category %}'{{ item }}',{% endfor %}],
+                    backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                }]
+            };
+            var MyCategory = new Chart(ctx_3, {
+                type: 'pie',
+                data: data_3,
+            });
+        });
+
+    </script>
+    <div class="form_slice">
+        <h1 class="balance">Your balance now: {{ balance }}</h1>
+        <h1 class="add_income">Show by date</h1>
+        <form class="date_form" action="{% url 'show_detail' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn_add_income">Show</button>
+        </form>
+        {% if sum_outcome and date_outcome %}
+            <h1 class="sum_in_period">Your income for this period: {{ income_in_period }}</h1>
+            <h1 class="sum_in_period">Your outcome for this period: {{ outcome_in_period }}</h1>
+            <div class="graphBox">
+                <div class="box">
+                    <canvas id="outcome_chart"></canvas>
+                </div>
+                <div class="box">
+                    <canvas id="income_chart"></canvas>
+                </div>
+                <div class="box">
+                    <canvas id="category_chart"></canvas>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
