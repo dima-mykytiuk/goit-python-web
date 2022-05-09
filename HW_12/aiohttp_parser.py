@@ -50,13 +50,13 @@ async def nhl_matches(session):
             ]
             for item in date:
                 date_of_matches.append(item.text.strip()[:10])
-            tick = 0
     
             step = 0
             for _ in range(len(date_of_matches)):
                 date_of_matches[step] = parser.parse(date_of_matches[step]).date()
                 step += 1
-    
+                
+            tick = 0
             for i in range(len(home_teams)):
                 nhl_matches.append({
                     'home_team': home_teams[tick].text,

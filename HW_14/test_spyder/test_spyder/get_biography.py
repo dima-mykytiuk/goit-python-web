@@ -20,7 +20,6 @@ def get_biography():
         for item in check.fetchall():
             for i in item:
                 links.append(i)
-    # do_db_list = []
     for item in links:
         req = requests.get(item)
         soup = BeautifulSoup(req.text, 'lxml')
