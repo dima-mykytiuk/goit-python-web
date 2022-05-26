@@ -36,9 +36,9 @@ class TestDbQueries(unittest.TestCase):
             address="Balzaka 4",
         )
         note_record = Notes(
-            text="Сходил за пивком",
-            desc="Бухнул",
-            tags=["Пивко", "Водка"],
+            text="Сходил за Продуктами",
+            desc="Купил еду",
+            tags=["Колбаса", "Пельмени"],
         )
         save_note_in_database(note=note_record)
         save_in_database(contact=record)
@@ -143,7 +143,7 @@ class TestDbQueries(unittest.TestCase):
         """Testing to change note in database"""
         self.assertEqual(
             change_note_in_db(
-                new_note="Сходить купить машинку", old_note="Сходил за пивком"
+                new_note="Сходить купить машинку", old_note="Сходил за Продуктами"
             ),
             "Successfully changed note",
         )
@@ -167,7 +167,7 @@ class TestDbQueries(unittest.TestCase):
             "Successfully added tags",
         )
         self.assertEqual(
-            insert_tag(note_name="Сходил", tag="Винчик"), "That note not in db"
+            insert_tag(note_name="Сходил", tag="что-то"), "That note not in db"
         )
 
     def test_14_get_birthday_in_database(self):
